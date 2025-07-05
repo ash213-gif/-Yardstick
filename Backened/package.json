@@ -1,0 +1,27 @@
+{
+  "name": "backened",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " nodemon  src/index "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ash213-gif/-Yardstick.git"
+  },
+  "author": "Ashish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ash213-gif/-Yardstick/issues"
+  },
+  "homepage": "https://github.com/ash213-gif/-Yardstick#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1",
+    "nodemon": "^3.1.10"
+  }
+}
