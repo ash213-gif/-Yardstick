@@ -10,6 +10,10 @@ route.get('/gettranaction/:id',gettranaction)
 route.delete('/deletetranaction/:id',deletetranaction)
 route.put('/updatetransaction/:id',updatetransaction)
 
+route.get('/', (req,res)=>{
+    res.send('my roytes is working ')
+} )
+
 // Monthly Bugete route
 route.post('/createBudget' , CreateBudget)
 route.get('/getBudget' , GetBudget)
