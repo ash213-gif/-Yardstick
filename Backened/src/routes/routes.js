@@ -1,23 +1,26 @@
 const express = require('express')
 const route=express.Router()
-const {Transaction,updatetransaction ,gettranaction ,deletetranaction}= require('../controller/Trasaction')
-const {DeleteBudget,GetBudget,CreateBudget} =require('../controller/Monthlycontrol')
+
+const {createtranaction,gettranaction,updatetransaction,deletetranaction} =require('../controller/Trasaction')
+const {CreateBudget,deletbudget,getbudget,getcotegoryexpenses,getbudgetcomparison,getanalyticsdash}=require('../controller/Monthlycontrol')
 const {TransactionMiddle  }= require('../middleware/TrancstionMiddle')
 
-route.post('/setTransaction',TransactionMiddle ,Transaction)
-route.get('/getalltranaction',gettranaction)
+
+route.post('/createtranaction',createtranaction)
+route.get('/gettranaction',gettranaction)
 route.get('/gettranaction/:id',gettranaction)
-route.delete('/deletetranaction/:id',deletetranaction)
-route.put('/updatetransaction/:id',updatetransaction)
+route.put('/updatetransaction',updatetransaction)
+route.delete('/deletetranaction' ,deletetranaction)
 
-route.get('/', (req,res)=>{
-    res.send('my roytes is working ')
-} )
+// monthly budgte 
 
-// Monthly Bugete route
-route.post('/createBudget' , CreateBudget)
-route.get('/getBudget' , GetBudget)
-route.delete('/deleteBudget' , DeleteBudget)
+route.post('/CreateBudget',CreateBudget)
+route.delete('/deletbudget',deletbudget)
+route.get('/getbudget',getbudget)
+route.get('/getcotegoryexpenses',getcotegoryexpenses)
+route.get('/getbudgetcomparison',getbudgetcomparison)
+route.get('/getanalyticsdash',getanalyticsdash)
+
 
 
 module.exports= route

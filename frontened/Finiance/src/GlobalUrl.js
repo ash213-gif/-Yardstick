@@ -1,0 +1,1 @@
+export  const GlobalUrl='https://yardstick-y6yz.onrender.com'

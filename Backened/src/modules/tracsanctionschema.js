@@ -1,10 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const TransactionSchema = new mongoose.Schema({
-    Amount: { type: Number, required: true, trim: true },
-    Category: { type: String, enum: ['Food', 'Healthcare','Transport', 'Utilities', 'Groceries',  'Petrol',   'Entertainment'], required: true },
-    Date: { type: Date, required: true, trim: true }
-} , {timestamps:true});
+const transactionSchema = new mongoose.Schema({
+  amount: { type: Number,required: true,min: 0.01},
+  date: {type: Date,required: true},
+  description: { type: String,required: true, trim: true,maxlength: 200},
+  category: {
+    type: String,
+    required: true,
+    enum: [
+      'Food & Dining',
+      'Transportation',
+      'Shopping',
+      'Entertainment',
+      'Bills & Utilities',
+      'Healthcare',
+      'Education',
+      'Travel',
+      'Groceries',
+      'Housing',
+      'Other'
+    ]
+  }
+}, {
+  timestamps: true
+});
 
-module.exports = mongoose.model('Transaction', TransactionSchema);
+
+module.exports = mongoose.model('Transaction', transactionSchema)
 

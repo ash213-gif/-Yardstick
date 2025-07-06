@@ -1,7 +1,7 @@
 const TransactionModel = require('../modules/tracsanctionschema')
 
 
-exports.Transaction = async (req, res) => {
+exports.createtranaction = async (req, res) => {
     try {
         const { Amount, Date:dateString , Category, Description } = req.body;
 
@@ -11,7 +11,6 @@ exports.Transaction = async (req, res) => {
             Category,
             Description 
         };
-
         
         const transaction = new TransactionModel(transactionData);
         await transaction.save();
