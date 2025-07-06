@@ -3,7 +3,7 @@ const MonthlySchema = require('../modules/monthlyschema');
 // Create or Update Budget
 exports.CreateBudget = async (req, res) => {
     try {
-        const { Category, Amount } = req.body;
+        const { category, amount } = req.body;
         const month = req.body.month || new Date().toISOString().slice(0, 7);
 
         const budget = await MonthlySchema.findOneAndUpdate(

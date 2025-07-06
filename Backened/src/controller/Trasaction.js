@@ -3,13 +3,13 @@ const TransactionModel = require('../modules/tracsanctionschema')
 
 exports.createtranaction = async (req, res) => {
     try {
-        const { Amount, Date:dateString , Category, Description } = req.body;
+        const { amount, date:dateString , category, description } = req.body;
 
         const transactionData = {
-            Amount,
-            Date: new Date(dateString), 
-            Category,
-            Description 
+            amount,
+            date: new Date(dateString), 
+            category,
+            description 
         };
         
         const transaction = new TransactionModel(transactionData);
