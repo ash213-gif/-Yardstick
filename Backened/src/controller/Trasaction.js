@@ -18,7 +18,7 @@ exports.Transaction = async (req, res) => {
 
         return res.status(201).send({ status: true, msg: 'Transaction saved successfully', transaction });
     } catch (e) {
-        return res.status(500).send({ status: false, msg: e.message });
+        return res.status(500).send({ status: false, message:e.msg });
     }
 };
 
@@ -30,7 +30,7 @@ exports.gettranaction= async (req, res) => {
         return res.status(200).send({ status: true, transactions });
     } catch (e) {
         console.log(e);
-        return res.status(500).send({ status: false, msg: e.message });
+        return res.status(500).send({ status: false, message: e.msg });
     }
 };
 
@@ -43,7 +43,7 @@ exports.gettranaction=  async (req, res) => {
         }
         return res.status(200).send({ status: true, transaction });
     } catch (e) {
-        return res.status(500).send({ status: false, msg: e.message });
+        return res.status(500).send({ status: false, message: e.msg });
     }
 };
 
@@ -70,7 +70,7 @@ exports.updatetransaction=  async (req, res) => {
 
         return res.status(200).send({ status: true, msg: 'Transaction updated successfully', transaction });
     } catch (e) {
-        return res.status(500).send({ status: false, msg: e.message });
+        return res.status(500).send({ status: false, message: e.msg });
     }
 };
 
@@ -83,7 +83,7 @@ exports.deletetranaction=  async (req, res) => {
         }
         return res.status(200).send({ status: true, msg: 'Transaction deleted successfully' });
     } catch (e) {
-        return res.status(500).send({ status: false, msg: e.message });
+        return res.status(500).send({ status: false, message: e.msg });
     }
 };
 
