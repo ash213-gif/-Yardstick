@@ -23,7 +23,7 @@ exports.createtranaction = async (req, res) => {
 
 
 // Read All Transactions
-exports.gettranactions= async (req, res) => {
+exports.alltranasaction= async (req, res) => {
     try {
         const transactions = await TransactionModel.find();
         console.log(object);

@@ -1,13 +1,14 @@
 const express = require('express')
 const route=express.Router()
 
-const {createtranaction,gettranaction,updatetransaction,deletetranaction} =require('../controller/Trasaction')
+const {createtranaction,gettranaction, alltranasaction,updatetransaction,deletetranaction} =require('../controller/Trasaction')
 const {CreateBudget,deletbudget,getbudget,getcotegoryexpenses,getbudgetcomparison,getanalyticsdash}=require('../controller/Monthlycontrol')
 const {TransactionMiddle  }= require('../middleware/TrancstionMiddle')
 
 
 route.post('/createtranaction',createtranaction)
 route.get('/gettranaction/:id',gettranaction)
+route.get('/alltranasaction',alltranasaction)
 route.put('/updatetransaction',updatetransaction)
 route.delete('/deletetranaction' ,deletetranaction)
 

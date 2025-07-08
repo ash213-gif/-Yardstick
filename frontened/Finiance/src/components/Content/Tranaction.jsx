@@ -70,7 +70,7 @@ export default function Transaction() {
   useEffect(() => {
     const getTransactions = async () => {
       try {
-        const response = await axios.get(`${GlobalUrl}/gettranactions/${Id}`);
+        const response = await axios.get(`${GlobalUrl}/alltranasaction`);
         console.log(response);
         if (response.data.status === true || response.data.status === 200) {
           dispatch(setgetdata(response.data.transactions));
