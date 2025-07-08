@@ -26,12 +26,15 @@ exports.createtranaction = async (req, res) => {
 exports.alltranasaction= async (req, res) => {
     try {
         const transactions = await TransactionModel.find();
-        console.log(object);
+        
+        if(transactions) { return res.status(400).send({ status:false ,msg :' tranaction not found ' }) }
+
         return res.status(200).send({ status: true, transactions:transactions });
     } catch (e) {
         console.log(e);
         return res.status(500).send({ status: false, message: e.msg });
     }
+
 };
 
 // Read Transaction by ID
