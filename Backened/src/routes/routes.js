@@ -7,7 +7,6 @@ const {TransactionMiddle  }= require('../middleware/TrancstionMiddle')
 
 
 route.post('/createtranaction',createtranaction)
-route.get('/gettranaction',gettranaction)
 route.get('/gettranaction/:id',gettranaction)
 route.put('/updatetransaction',updatetransaction)
 route.delete('/deletetranaction' ,deletetranaction)

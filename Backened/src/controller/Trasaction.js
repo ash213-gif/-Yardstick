@@ -23,10 +23,11 @@ exports.createtranaction = async (req, res) => {
 
 
 // Read All Transactions
-exports.gettranaction= async (req, res) => {
+exports.gettranactions= async (req, res) => {
     try {
         const transactions = await TransactionModel.find();
-        return res.status(200).send({ status: true, transactions });
+        console.log(object);
+        return res.status(200).send({ status: true, transactions:transactions });
     } catch (e) {
         console.log(e);
         return res.status(500).send({ status: false, message: e.msg });

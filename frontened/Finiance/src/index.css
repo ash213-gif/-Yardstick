@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+
+.spinner-border {
+  border-color: rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 1);
+}
