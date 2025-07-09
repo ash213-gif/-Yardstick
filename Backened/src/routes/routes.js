@@ -10,9 +10,10 @@ route.post('/createtranaction',createtranaction)
 route.get('/gettranaction/:id',gettranaction)
 route.get('/alltranasaction',alltranasaction)
 route.put('/updatetransaction',updatetransaction)
-route.delete('/deletetranaction' ,deletetranaction)
+route.delete('/deletetranaction/:id' ,deletetranaction)
 
 // monthly budgte 
+
 
 route.post('/CreateBudget',CreateBudget)
 route.delete('/deletbudget',deletbudget)

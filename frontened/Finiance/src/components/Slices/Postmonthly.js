@@ -13,15 +13,13 @@ export const createBudget = createAsyncThunk('monthly/createBudget',
   }
 );
 
-const Postmontly = createSlice({
+const Postmonthly = createSlice({
   name: "monthlyPost",
   initialState: {
     budget: {
       category: "",
       amount: "",
     },
-    loading: false,
-    error: null,
   },
 
   reducers: {
@@ -35,9 +33,7 @@ const Postmontly = createSlice({
       };
     },
   },
- 
-  
 });
 
-export const { setbudget, clearBudget } = Postmontly.actions;
-export default Postmontly.reducer;
+export const { setbudget, clearBudget } = Postmonthly.actions;
+export default Postmonthly.reducer;

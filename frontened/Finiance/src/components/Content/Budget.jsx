@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setbudget, clearBudget, createBudget } from "../Slices/Postmonthly";
+import { setbudget, clearBudget } from "../Slices/Postmonthly";
 import { AiOutlinePlus } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { GlobalUrl } from "../../GlobalUrl";
 
-
-
-
 export default function Budget() {
   const dispatch = useDispatch();
   const budgetData = useSelector((state) => state.monthly.budget || {});
-
-
   const [showBudgetForm, setShowBudgetForm] = useState(false);
   const [budgets, setBudgets] = useState([]);
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false); // Added loading state
 
-  // const Id = sessionStorage.getItem("Id");
+  const Id = sessionStorage.getItem("Id"); // Uncommented to get user ID
 
   const categories = [
     "Food & Dining",
@@ -40,14 +36,13 @@ export default function Budget() {
     dispatch(setbudget({ [name]: value }));
   };
 
-  const handleSubmit = async (err) => {
+  const handleSubmit = async (e) => { // Corrected parameter name
     e.preventDefault();
+    setLoading(true); // Set loading to true
     try {
       const response = await axios.post(`${GlobalUrl}/CreateBudget`, formData);
-      console.log(response);
-      
       if (response.data.success || response.data.status === 201 || response.data.status === true) {
-        setBudgets([...budgets, response.data.data || response.data.budget]);
+        setBudgets((prevBudgets) => [...prevBudgets, response.data.data]); // Fixed state update
         dispatch(clearBudget());
         setFormData({ category: "", amount: "" });
         toast.success(response.data.msg || "Budget set successfully!");
@@ -59,7 +54,9 @@ export default function Budget() {
       } else {
         toast.error("Failed to set budget. Please try again.");
       }
-      console.log(err);
+      console.error(err);
+    } finally {
+      setLoading(false); // Set loading to false after API call
     }
   };
 
@@ -77,7 +74,7 @@ export default function Budget() {
         if (err.response && err.response.data.message) {
           toast.error(err.response.data.message);
         }
-        console.log(err);
+        console.error(err);
       }
     };
     if (Id) {
@@ -104,8 +101,6 @@ export default function Budget() {
       </div>
       
       <ToastContainer position="top-right" autoClose={3000} />
-      
-      {/* {error && <p className="text-red-500 mb-4 p-3 bg-red-50 rounded-md">{error}</p>} */}
       
       {showBudgetForm && (
         <div className="bg-white p-6 rounded-lg shadow-lg mb-8 border border-gray-200">
@@ -153,7 +148,7 @@ export default function Budget() {
             
             <div className="flex justify-start space-x-4 mt-6">
               <button
-                // disabled={loading}
+                // disabled={loading} // Disable button when loading
                 type="submit"
                 className="bg-blue-600 text-white py-3 px-6 rounded-3xl hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md"
               >

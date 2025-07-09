@@ -77,10 +77,14 @@ exports.updatetransaction=  async (req, res) => {
     }
 };
 
+
+
+
 // Delete Transaction
 exports.deletetranaction=  async (req, res) => {
     try {
         const transaction = await TransactionModel.findByIdAndDelete(req.params.id);
+        
         if (!transaction) {
             return res.status(404).send({ status: false, msg: 'Transaction not found' });
         }
