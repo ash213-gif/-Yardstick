@@ -72,7 +72,6 @@ export default function Transaction() {
       try {
         const response = await axios.get(`${GlobalUrl}/alltranasaction`);
         console.log(response);
-        console.log(response);
         if (response.data.status === true || response.data.status === 200) {
           dispatch(setgetdata(response.data.transactions));
           setLocalTransactions(response.data.transactions);

@@ -7,8 +7,8 @@ exports.CreateBudget = async (req, res) => {
         const month = req.body.month || new Date().toISOString().slice(0, 7);
 
         const budget = await MonthlySchema.findOneAndUpdate(
-            { Category, month },
-            { Amount },
+            { category, month },
+            { amount },
             { new: true, upsert: true, runValidators: true }
         );
 
