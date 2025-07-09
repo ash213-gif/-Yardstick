@@ -72,6 +72,7 @@ export default function Transaction() {
       try {
         const response = await axios.get(`${GlobalUrl}/alltranasaction`);
         console.log(response);
+        console.log(response);
         if (response.data.status === true || response.data.status === 200) {
           dispatch(setgetdata(response.data.transactions));
           setLocalTransactions(response.data.transactions);
@@ -80,12 +81,13 @@ export default function Transaction() {
       } catch (err) {
        if (err.response && err.response.data.message) {
         toast.error(err.response.data.message);
+          console.log(err);
       }
-      console.log(err);
+    
       }
     };
     getTransactions();
-  }, [Id]);
+  }, []);
 
   return (
     <div className="p-4">

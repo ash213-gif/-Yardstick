@@ -27,7 +27,7 @@ exports.alltranasaction= async (req, res) => {
     try {
         const transactions = await TransactionModel.find();
         
-        if(transactions) { return res.status(400).send({ status:false ,msg :' tranaction not found ' }) }
+        if(!transactions) { return res.status(400).send({ status:false ,msg :' tranaction not found ' }) }
 
         return res.status(200).send({ status: true, transactions:transactions });
     } catch (e) {
