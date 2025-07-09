@@ -55,9 +55,10 @@ exports.updatetransaction=  async (req, res) => {
     try {
         const { amount, date: dateString, category, description } = req.body;
         const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-            return res.status(400).send({ status: false, msg: 'Invalid date format' });
-        }
+
+        // if (isNaN(date.getTime())) {
+        //     return res.status(400).send({ status: false, msg: 'Invalid date format' });
+        // }
 
         const transactionData = {
             amount,
