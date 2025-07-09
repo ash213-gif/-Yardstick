@@ -9,7 +9,7 @@ const {TransactionMiddle  }= require('../middleware/TrancstionMiddle')
 route.post('/createtranaction',createtranaction)
 route.get('/gettranaction/:id',gettranaction)
 route.get('/alltranasaction',alltranasaction)
-route.put('/updatetransaction',updatetransaction)
+route.put('/updatetransaction/:id',updatetransaction)
 route.delete('/deletetranaction/:id' ,deletetranaction)
 
 // monthly budgte 

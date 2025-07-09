@@ -19,9 +19,11 @@ export default function Transaction() {
   const [transactions, setLocalTransactions] = useState([]);
   const [formData, setFormData] = useState(userData);
   const [loading, setLoading] = useState(false);
-  const  [ deletediv,setdeletdiv]=useState(false)
-  const [editdiv,seteditdiv]=useState(false)
-  const [deleteId ,setdeleteId]=useState('')
+  const [deletediv, setdeletdiv] = useState(false);
+  const [editdiv, seteditdiv] = useState(false);
+  const [deleteId, setdeleteId] = useState('');
+  const [editId, seteditId] = useState('');
+  const [editFormData, seteditFormData] = useState({});
 
   const categories = [
     "Food & Dining",
@@ -41,6 +43,11 @@ export default function Transaction() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     dispatch(setusertranaction({ [name]: value }));
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    seteditFormData({ ...editFormData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -70,25 +77,49 @@ export default function Transaction() {
     }
   };
 
-  const handleEdit = (id) => {
-    
-
-    console.log("Edit transaction with id:", id);
+  const handleEdit = async (id) => {
+    try {
+      const response = await axios.put(`${GlobalUrl}/updatetransaction/${id}`);
+      seteditFormData(response.data.transaction);
+      seteditId(id);
+      seteditdiv(true);
+    } catch (err) {
+      if (err.response && err.response.data.message) {
+        toast.error(err.response.data.message);
+      }
+      console.log(err);
+    }
   };
 
-
-  const handledeleteId=(id)=>{
-    setdeleteId(id)
-
-  }
-
-  const handleDelete = async (id) => {
-    const response = await axios.delete(`${GlobalUrl}/deletetranaction${deleteId}`)
-    console.log(response);
-    console.log("Delete transaction with id:", id);
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`${GlobalUrl}/updatetransaction/${editId}`, editFormData);
+      setLocalTransactions(transactions.map(transaction => transaction._id === editId ? response.data.transaction : transaction));
+      toast.success(response.data.msg);
+      seteditdiv(false);
+    } catch (err) {
+      if (err.response && err.response.data.message) {
+        toast.error(err.response.data.message);
+      }
+      console.log(err);
+    }
   };
 
-
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`${GlobalUrl}/deletetranaction/${deleteId}`);
+      console.log(response);
+      setLocalTransactions(transactions.filter(transaction => transaction._id !== deleteId));
+      toast.success("Transaction deleted successfully");
+      setdeletdiv(false);
+    } catch (err) {
+      if (err.response && err.response.data.message) {
+        toast.error(err.response.data.message);
+      }
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -217,13 +248,13 @@ export default function Transaction() {
             <td className=" px-4 py-2">{transaction.category}</td>
             <td className=" px-4 py-2 flex space-x-2">
               <button 
-                onClick={() => handleEdit(transaction._id)} 
+                onClick={() =>{ handleEdit(transaction._id) ; seteditdiv(true)}} 
                 className="text-blue-500 hover:text-blue-700  cursor-pointer p-2  transition duration-200"
               >
                 <FaEdit />
               </button>
               <button 
-                onClick={() => setdeletdiv(true)} 
+                onClick={() => {setdeleteId(transaction._id); setdeletdiv(true)}} 
                 className="text-red-500 hover:text-red-700 transition   cursor-pointer  p-2 duration-200"
               >
                 <FaTrashAlt />
@@ -252,6 +283,83 @@ export default function Transaction() {
               Cancel
             </button>
           </div>
+        </div>
+      </div>
+    )}
+    {editdiv && (
+      <div className="fixed top-0 left-0 w-full h-full  bg-opacity-50 p-10 flex justify-center items-center">
+        <div className="bg-white p-18 rounded-3xl shadow-lg">
+          <h2 className="text-lg font-bold mb-2">Edit Transaction</h2>
+          <form onSubmit={handleUpdate}>
+            <div className="flex p-2  flex-col">
+              <label htmlFor="amount">Amount:</label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                value={editFormData.amount || ""}
+                onChange={handleEditChange}
+                required
+                className="p-3 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="date">Date:</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value={editFormData.date || ""}
+                onChange={handleEditChange}
+                required
+                className="p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="description">Description:</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                value={editFormData.description || ""}
+                onChange={handleEditChange}
+                required
+                className="p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="category">Category:</label>
+              <select
+                id="category"
+                name="category"
+                value={editFormData.category || ""}
+                onChange={handleEditChange}
+                required
+                className="p-2 border border-gray-300 rounded"
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-end space-x-4">
+              <button 
+                type="submit" 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
+              <button 
+                onClick={()=>seteditdiv(false)} 
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     )}

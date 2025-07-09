@@ -53,17 +53,17 @@ exports.gettranaction=  async (req, res) => {
 // Update Transaction
 exports.updatetransaction=  async (req, res) => {
     try {
-        const { Amount, Date: dateString, Category, Description } = req.body;
+        const { amount, date: dateString, category, description } = req.body;
         const date = new Date(dateString);
         if (isNaN(date.getTime())) {
             return res.status(400).send({ status: false, msg: 'Invalid date format' });
         }
 
         const transactionData = {
-            Amount,
-            Date: date,
-            Category,
-            Description
+            amount,
+            date: date,
+            category,
+            description
         };
 
         const transaction = await TransactionModel.findByIdAndUpdate(req.params.id, transactionData, { new: true });
@@ -73,6 +73,7 @@ exports.updatetransaction=  async (req, res) => {
 
         return res.status(200).send({ status: true, msg: 'Transaction updated successfully', transaction });
     } catch (e) {
+        console.log(e);
         return res.status(500).send({ status: false, message: e.msg });
     }
 };
