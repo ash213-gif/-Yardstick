@@ -1,4 +1,5 @@
 const MonthlySchema = require('../modules/monthlyschema');
+const Transaction = require('../modules/tracsanctionschema')
 
 // Create or Update Budget
 exports.CreateBudget = async (req, res) => {
@@ -59,9 +60,10 @@ exports.deletbudget = async (req, res) => {
 // Analytics Routes
 
 // GET /api/analytics/monthly-expenses - Get monthly expenses
+
 exports.getbudget = async (req, res) => {
     try {
-        const { months = 12 } = req.query;
+        const { month = 12 } = req.query;
 
         const pipeline = [
             {
@@ -78,17 +80,21 @@ exports.getbudget = async (req, res) => {
                 $sort: { '_id.year': -1, '_id.month': -1 }
             },
             {
-                $limit: parseInt(months)
+                $limit: parseInt(month)
             }
         ];
 
+        
+
         const monthlyExpenses = await Transaction.aggregate(pipeline);
+        
 
         const formattedData = monthlyExpenses.map(item => ({
             month: `${item._id.year}-${item._id.month.toString().padStart(2, '0')}`,
             total: item.total,
             count: item.count
         })).reverse();
+        console.log(formattedData);
 
         res.json({
             success: true,
@@ -102,6 +108,7 @@ exports.getbudget = async (req, res) => {
         });
     }
 }
+
 
 
 // GET /api/analytics/category-expenses - Get category-wise expenses

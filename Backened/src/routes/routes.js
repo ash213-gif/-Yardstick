@@ -16,8 +16,8 @@ route.delete('/deletetranaction/:id' ,deletetranaction)
 
 
 route.post('/CreateBudget',CreateBudget)
-route.delete('/deletbudget',deletbudget)
 route.get('/getbudget',getbudget)
+route.delete('/deletbudget',deletbudget)
 route.get('/getcotegoryexpenses',getcotegoryexpenses)
 route.get('/getbudgetcomparison',getbudgetcomparison)
 route.get('/getanalyticsdash',getanalyticsdash)

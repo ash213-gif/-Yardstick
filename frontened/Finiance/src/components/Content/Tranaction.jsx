@@ -78,17 +78,7 @@ export default function Transaction() {
   };
 
   const handleEdit = async (id) => {
-    try {
-      const response = await axios.put(`${GlobalUrl}/updatetransaction/${id}`);
-      seteditFormData(response.data.transaction);
-      seteditId(id);
-      seteditdiv(true);
-    } catch (err) {
-      if (err.response && err.response.data.message) {
-        toast.error(err.response.data.message);
-      }
-      console.log(err);
-    }
+  seteditId(id)
   };
 
   const handleUpdate = async (e) => {
